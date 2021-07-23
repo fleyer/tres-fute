@@ -36,25 +36,25 @@ const Rule = [
             content: '4',
 
             footer: [
-                // {
-                //     mark: 'black',
-                //     colorVariation: null,
-                //     tail: true
-                // },
-                // {
-                //     mark: 'black-6',
-                //     colorVariation: null,
-                //     tail: true
-                // },
+                {
+                    mark: 'black',
+                    colorVariation: null,
+                    tail: true
+                },
+                {
+                    mark: 'black-6',
+                    colorVariation: null,
+                    tail: true
+                },
             ]
         },
         {
             content: '5',
             
             footer: [
-                // {
-                //     bonus: '3j'
-                // }
+                {
+                    bonus: '3j'
+                }
             ]
            
         },
@@ -62,9 +62,9 @@ const Rule = [
             content: '6',
 
             footer: [
-                // {
-                //     bonus: '2/1j'
-                // }
+                {
+                    bonus: '2/1j'
+                }
             ]
         }
     ]

@@ -4,14 +4,16 @@ import { getInnerElement } from '../clickable'
 import style from './style.css'
 
 const Footer = ({children,elements}) => {
-    return (<div class={`flex ${style.footer}`}>
+    return (<div class={`relative flex ${style.footer}`}>
         {getElements(elements)}
         {children}
     </div>)
 }
 
 const getElements = (elements=[]) => {
-    return elements.map((element)=> getInnerElement(element,'text-white','',[],null))
+    return <div class="absolute w-full h-full flex justify-center">
+        {elements.map((element)=> getInnerElement(element,'text-white','',[],null))}
+    </div>
 }
 
 export default Footer

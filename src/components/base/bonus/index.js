@@ -5,7 +5,6 @@ import { GiWolfHead } from "react-icons/gi";
 
 import Box from '../box'
 
-
 const Bonus = ({value,css}) => {
     const BoxCmp = getDisplay(value)
 

@@ -10,6 +10,7 @@ import CircleElement  from '../../components/base/clickable/circle'
 import Display from '../../components/base/display'
 import Divider from '../../components/base/divider';
 import CheckDisplay from '../../components/base/clickable/checkedDisplay';
+import CircleCheckedDisplay from '../../components/base/clickable/circleCheckedDisplay';
 
 import {Rule as TimelineRule, Css as TimelineCss} from '../../game/timeline';
 import {Rule as ReplayRule} from '../../game/replay';
@@ -122,17 +123,27 @@ const getTimelineElement = (props) => {
 	const { footer,cmps } = rule
 	return <Box css="relative flex flex-col bg-gray-500 items-center">
 		<Clickable {...props} border="border-2 border-black rounded border-block"></Clickable>
-		<div class={`mt-1 ${style.footer}`}>
+		<div class={`mt-1 h-6 ${style.footer}`}>
 			{ footer ? <Footer elements={footer}></Footer> : '' }
-			{ cmps ? <Footer>{cmps}</Footer> : ''}
 		</div>
    </Box>
 }
 
-const getCircleClickable = (props) => <Clickable 
-	{...props} 
-	border=" border-2 rounded border-black" 
-	displayElement={CircleElement}></Clickable>
+const getCircleClickable = (props) => {
+	const [counter,setCounter] = useState(0)
+	const onClick = useCallback(() => {
+		setCounter((counter)=> counter < 2 ? ++counter : counter )
+	},[])
+
+	return <Clickable 
+		{...props} 
+		border=" border-2 rounded border-black" 
+		displayElement={CircleElement}
+		onClick={onClick}>
+			{ counter > 0 && <CircleCheckedDisplay value="true"></CircleCheckedDisplay>}
+			{ counter > 1 && <CheckDisplay value="true"></CheckDisplay>}
+		</Clickable>
+}
 
 const getClickable= (props) => {
 	
