@@ -1,0 +1,18 @@
+.line {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 4px;
+    
+}
+
+.line > * {
+    margin-right: 10px;
+}
+
+.line > *:last-child {
+    margin-right: 0;
+}
+
+.grid > .line {
+    align-items: center;
+}

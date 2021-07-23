@@ -1,0 +1,25 @@
+.content {
+    min-height: 1.5em;
+}
+
+.clickable {
+    min-width: 35px;
+    max-width: 35px;
+}
+
+.boxContainer {
+    height: 30px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clickableContainer {
+
+}
+
+.checkContainer {
+    
+    
+}
