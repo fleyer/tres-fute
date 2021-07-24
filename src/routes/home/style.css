@@ -1,7 +1,6 @@
 .home {
 	padding: 56px 20px;
 	min-height: 100%;
-	width: 100%;
 }
 
 .grid {
@@ -27,6 +26,10 @@
 .numberInput {
 	width: 100%;
 	text-align: center;
+}
+
+.numberInput:focus-within {
+	z-index: 100;
 }
 
 .bonusHeader {

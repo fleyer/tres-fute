@@ -11,7 +11,7 @@ const Rule = [
         {content: '1'},
         {content: 'X'},
         {content: '5'},
-        {mark: 'orange-4', colorVariation: '400', tail: true}
+        {mark: 'yellow-4', colorVariation: '500', tail: true}
     ],
     [
         {content: '1'},
