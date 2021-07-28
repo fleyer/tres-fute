@@ -3,7 +3,7 @@ import {h} from 'preact'
 import style from './style.css'
 
 const Grid = ({item,gridInfo,rule,css={}})=>{
-    const {line,column,input='checkbox'} = gridInfo
+    const {line,column,input='checkbox',itemId=""} = gridInfo
     const _grid = []
     const Item = item
 
@@ -13,7 +13,7 @@ const Grid = ({item,gridInfo,rule,css={}})=>{
 
         for(let j = 0; j<rule[i].length; j++){
             _grid[i].push(
-                <Item number={j} rule={rule[i][j]} color={css.color} inputType={input}/>
+                <Item id={`${itemId}-${j}`} rule={rule[i][j]} color={css.color} inputType={input}/>
             )
         }
     }

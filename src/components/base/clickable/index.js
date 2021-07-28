@@ -1,7 +1,7 @@
 import { h, Fragment } from 'preact'
+import { useCallback } from 'preact/hooks'
 
 import SquareElement from './square'
-import CheckDisplay from './checkedDisplay'
 
 import Bonus from "../bonus"
 import Indicator from "../indicator"
@@ -13,12 +13,14 @@ const Clickable = (props) => {
     const { number, value, rule = {} , color, border,children,onClick=()=>{}} = props
     const { displayElement } = props
 
-    const _onClick = () => { onClick(rule)}
+    const _onClick = useCallback(() => { 
+        onClick(rule)
+    },[])
 
     const InnerElement = _getInnerElement
 
     return (
-        <div class={`flex flex-col items-center relative ${style.clickable}`} onClick={_onClick}>
+        <div class={`flex flex-col items-center relative select-none ${style.clickable}`} onClick={_onClick}>
             <InnerElement rule={rule} color={color} border={border} displayElement={displayElement}>
                 {children}
             </InnerElement>

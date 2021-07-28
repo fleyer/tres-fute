@@ -4,7 +4,7 @@ import Box from '../box'
 const Mark = ({value,colorVariation,css}) => {
     const [color,markValue] = value.split('-')
 
-    return (<Box css={`${css} ${getCss(color,colorVariation)}`}>{getValue(markValue)}</Box>)
+    return (<Box css={`text-white ${css} ${getCss(color,colorVariation)}`}>{getValue(markValue)}</Box>)
 }
 
 const getValue = (value) => {

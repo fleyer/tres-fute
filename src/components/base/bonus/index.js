@@ -14,11 +14,11 @@ const Bonus = ({value,css}) => {
 const getDisplay = (value) => {
     switch(value){
         case '+1': 
-            return ({css}) => <Box css={`bg-black ${css}`}>{value}</Box>
+            return ({css}) => <Box css={`bg-black text-white ${css}`}>{value}</Box>
         break
 
         case 'replay': 
-            return ({css}) => (<Box css={`bg-black ${css}`}><FaSync size={15}/></Box>)
+            return ({css}) => (<Box css={`bg-black text-white ${css}`}><FaSync size={15}/></Box>)
         break
 
         case 'wolf' :

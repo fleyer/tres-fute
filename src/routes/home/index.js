@@ -22,45 +22,30 @@ import { Rule as OrangeRule, Css as OrangeCss } from '../../game/orange';
 import { Rule as PurpleRule, Css as PurpleCss, Input as PurpleInput } from '../../game/purple';
 
 import style from './style.css';
+
 import Bonus from '../../components/base/bonus';
 import Content from '../../components/base/content';
 import Footer from '../../components/base/content/footer';
 import Box from '../../components/base/box';
 
+import ReplayBonusDisplay from './views/replayBonusDisplay';
+import PlusOneBonusDisplay from './views/plusOneBonusDisplay';
+import TimelineDisplay from './views/timelineDisplay';
+import GreenGridDisplay from './views/greenGridDisplay';
+import { BsInfo } from 'react-icons/bs';
+import InfoDisplay from './views/infoDisplay';
+
 const Home = () => (
 	<div class={`w-full flex justify-center ${style.home}`}>
 		<div class="w-full mt-4 flex flex-col lg:items-center lg:max-w-3xl">
 			{/* timeline */}
-			<div class={style.gridTimeline}>
-				<Grid
-					item={getTimelineElement}
-					gridInfo={{ line: 1, column: 6 }}
-					rule={TimelineRule}
-					css={TimelineCss}
-				/>
-			</div>
+			<TimelineDisplay></TimelineDisplay>
 
 			{/* replay bonus line */}
-			<div class={`mt-4 rounded border-2 border-gray-50 bg-gray-400 ${style.grid}`}>
-				<Grid
-					item={getCircleClickable}
-					gridInfo={{ line: 1, column: 7 }}
-					rule={ReplayRule}
-				/>
-
-				<div class={style.bonusHeader}><Bonus value={'replay'}></Bonus></div>
-			</div>
+			<ReplayBonusDisplay></ReplayBonusDisplay>
 
 			{/* +1 bonus line */}
-			<div class={`mt-4 rounded border-2 border-gray-50 bg-gray-400 ${style.grid}`}>
-				<Grid
-					item={getCircleClickable}
-					gridInfo={{ line: 1, column: 7 }}
-					rule={PlusOneRule}
-				/>
-
-				<div class={style.bonusHeader}><Bonus value={'+1'}></Bonus></div>
-			</div>
+			<PlusOneBonusDisplay></PlusOneBonusDisplay>
 
 			{/* yellow box */}
 			<div class={`mt-4 pt-2 pb-1 rounded ${YellowCss.bg} ${style.grid}`}>
@@ -87,14 +72,7 @@ const Home = () => (
 			</div>
 
 			{/* green box */}
-			<div class={`mt-4 pt-2 pb-1 rounded ${GreenCss.bg} ${style.grid}`}>
-				<Grid
-					item={getCheckClickable}
-					gridInfo={{ line: 1, column: 10 }}
-					rule={GreenRule}
-					css={GreenCss}
-				/>
-			</div>
+			<GreenGridDisplay></GreenGridDisplay>
 
 			{/* orange box */}
 			<div class={`mt-4 pt-2 pb-1 rounded ${OrangeCss.bg} ${style.grid}`}>
@@ -114,39 +92,13 @@ const Home = () => (
 					rule={PurpleRule}
 				/>
 			</div>
+
 		</div>
-
-
 
 	</div>
 );
 
-const getTimelineElement = (props) => {
-	const { rule } = props
-	const { footer, cmps } = rule
-	return <Box css="relative flex flex-col bg-gray-500 items-center">
-		<Clickable {...props} border="border-2 border-black rounded border-block"></Clickable>
-		<div class={`mt-1 h-6 ${style.footer}`}>
-			{footer ? <Footer elements={footer}></Footer> : ''}
-		</div>
-	</Box>
-}
 
-const getCircleClickable = (props) => {
-	const [counter, setCounter] = useState(0)
-	const onClick = useCallback(() => {
-		setCounter((counter) =>  ++counter % 3 )
-	}, [])
-
-	return <Clickable
-		{...props}
-		border=" border-2 rounded border-black"
-		displayElement={CircleElement}
-		onClick={onClick}>
-		{counter > 0 && <CircleCheckedDisplay value="true"></CircleCheckedDisplay>}
-		{counter > 1 && <CheckDisplay value="true"></CheckDisplay>}
-	</Clickable>
-}
 
 const getClickable = (props) => {
 

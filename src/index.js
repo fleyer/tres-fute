@@ -1,4 +1,8 @@
 import './style';
 import App from './components/app';
 
-export default App;
+import store from './app/store'
+
+export default () => (
+    <App store={store}></App>
+)
