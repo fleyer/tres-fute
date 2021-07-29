@@ -50,13 +50,13 @@ const Rule = [
         },
         {
             content: '5',
-            
+
             footer: [
                 {
                     bonus: '3j'
                 }
             ]
-           
+
         },
         {
             content: '6',
@@ -74,4 +74,6 @@ const Css = {
     color: 'black'
 }
 
-export {Rule,Css}
+const Id = 'timeline'
+
+export { Rule, Css, Id }
