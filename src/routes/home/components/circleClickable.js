@@ -2,7 +2,7 @@ import { h } from 'preact'
 import { useState, useCallback } from 'preact/hooks'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { incrementBonus } from '../../../app/reducers/gameSlice'
+import { updateBonus } from '../../../app/reducers/gameSlice'
 
 import Clickable from '../../../components/base/clickable'
 import CircleElement from '../../../components/base/clickable/circle'
@@ -18,7 +18,7 @@ const CircleClickable = (props) => {
 	const counter = color && useSelector((state) => state.game[color][colorId])
 
 	const onClick = useCallback((rule) => {
-		dispatch(incrementBonus({ rule, id }))
+		dispatch(updateBonus({ rule, id }))
 	}, [])
 
 	return <Clickable

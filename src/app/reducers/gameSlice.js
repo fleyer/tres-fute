@@ -13,8 +13,7 @@ const gameSclice = createSlice({
         decrement: (state, action) => {
             state[action.target] -= 1
         },
-        incrementBonus: (state, action) => {
-            // state.plusOne += 1
+        updateBonus: (state, action) => {
             const { rule, id } = action.payload
             const [color,colorId] = splitId(id)
             const currentValue = state[color][colorId]
@@ -85,6 +84,6 @@ function dec(value){
     return value - 1
 }
 
-export const { incrementBonus, incrementReplay, decrement, executeRule } = gameSclice.actions
+export const { updateBonus, incrementReplay, decrement, executeRule } = gameSclice.actions
 
 export default gameSclice.reducer
