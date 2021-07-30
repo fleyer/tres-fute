@@ -13,7 +13,7 @@ const Grid = ({item,gridInfo,rule,css={}})=>{
 
         for(let j = 0; j<rule[i].length; j++){
             _grid[i].push(
-                <Item id={`${itemId}-${j}`} rule={rule[i][j]} color={css.color} inputType={input}/>
+                <Item id={`${itemId}-${i}-${j}`} rule={rule[i][j]} color={css.color} inputType={input}/>
             )
         }
     }

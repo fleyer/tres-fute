@@ -7,7 +7,6 @@ import Grid from '../../components/grid';
 import Clickable from '../../components/base/clickable'
 import SquareElement from '../../components/base/clickable/square'
 import CircleElement from '../../components/base/clickable/circle'
-import Display from '../../components/base/display'
 import Divider from '../../components/base/divider';
 import CheckDisplay from '../../components/base/clickable/checkedDisplay';
 import CircleCheckedDisplay from '../../components/base/clickable/circleCheckedDisplay';
@@ -34,12 +33,13 @@ import TimelineDisplay from './views/timelineDisplay';
 import GreenGridDisplay from './views/greenGridDisplay';
 import { BsInfo } from 'react-icons/bs';
 import InfoDisplay from './views/infoDisplay';
+import BlueGridDisplay from './views/blueGridDisplay';
 
 const Home = () => (
 	<div class={`w-full flex justify-center ${style.home}`}>
 		<div class="w-full mt-4 flex flex-col lg:items-center lg:max-w-3xl">
 			{/* timeline */}
-			<TimelineDisplay></TimelineDisplay>
+			{/* <TimelineDisplay></TimelineDisplay> */}
 
 			{/* replay bonus line */}
 			<ReplayBonusDisplay></ReplayBonusDisplay>
@@ -48,50 +48,39 @@ const Home = () => (
 			<PlusOneBonusDisplay></PlusOneBonusDisplay>
 
 			{/* yellow box */}
-			<div class={`mt-4 pt-2 pb-1 rounded ${YellowCss.bg} ${style.grid}`}>
+			{/* <div class={`mt-4 pt-2 pb-1 rounded ${YellowCss.bg} ${style.grid}`}>
 				<Grid
 					item={getCheckClickable}
 					gridInfo={{ line: 4, column: 4 }}
 					rule={YellowRule}
 					css={YellowCss}
 				/>
-			</div>
+			</div> */}
 
 			{/* blue box */}
-			<div class={`mt-4 pt-2 pb-1 rounded ${BlueCss.bg} ${style.grid}`}>
-				<Grid
-					item={getDisplay}
-					gridInfo={{ line: 1, column: 11 }}
-					rule={BlueHeader}
-				/>
-				<Grid
-					item={getCheckClickable}
-					gridInfo={{ line: 3, column: 4 }}
-					rule={BlueRule}
-				/>
-			</div>
+			<BlueGridDisplay></BlueGridDisplay>
 
 			{/* green box */}
 			<GreenGridDisplay></GreenGridDisplay>
 
 			{/* orange box */}
-			<div class={`mt-4 pt-2 pb-1 rounded ${OrangeCss.bg} ${style.grid}`}>
+			{/* <div class={`mt-4 pt-2 pb-1 rounded ${OrangeCss.bg} ${style.grid}`}>
 				<Grid
 					item={getOrangeClickable}
 					gridInfo={{ line: 1, column: 10 }}
 					rule={OrangeRule}
 					css={OrangeCss}
 				/>
-			</div>
+			</div> */}
 
 			{/* purple box */}
-			<div class={`mt-4 pt-2 pb-1 rounded ${PurpleCss.bg} ${style.grid}`}>
+			{/* <div class={`mt-4 pt-2 pb-1 rounded ${PurpleCss.bg} ${style.grid}`}>
 				<Grid
 					item={getPurpleClickable}
 					gridInfo={{ line: 1, column: 10, input: PurpleInput.type }}
 					rule={PurpleRule}
 				/>
-			</div>
+			</div> */}
 
 		</div>
 
@@ -107,7 +96,6 @@ const getClickable = (props) => {
 	</Clickable>
 }
 
-const getDisplay = (props) => <Display {...props}></Display>
 
 const getCheckClickable = (props) => {
 	const CheckClickable = getClickable

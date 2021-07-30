@@ -1,14 +1,16 @@
 import { h } from 'preact'
-import { useState, useCallback } from 'preact/hooks'
+import { useState, useCallback, useContext } from 'preact/hooks'
+import { useSelector } from 'react-redux'
+
+import { Context } from '../context'
 
 import ClickableElement from './clickable'
 import CheckedDisplay from "../../../components/base/clickable/checkedDisplay"
-import { useSelector } from 'react-redux'
 
 const CheckClickable = (props) => {
-	const [colorId,id] = props.id.split('-')
+	const context = useContext(Context)
 
-	const checked = useSelector((state) => state.game[colorId] ? state.game[colorId][id] : false)
+	const checked = useSelector(context.selector(props.id))
 
 	return <ClickableElement {...props}>
 		{checked && <CheckedDisplay value={checked}></CheckedDisplay>}
