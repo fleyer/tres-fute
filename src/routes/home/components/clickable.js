@@ -13,7 +13,7 @@ const ClickableElement = (props) => {
     const { id } = props
 
     const onClick = useCallback((rule) => {
-        context.dispatch({rule,id})
+        !rule.tail && context.dispatch({rule,id})
     }, [])
 
     return <Clickable {...props} onClick={onClick} border=" border-2 rounded border-black">

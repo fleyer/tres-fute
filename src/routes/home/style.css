@@ -26,6 +26,8 @@
 .numberInput {
 	width: 100%;
 	text-align: center;
+
+	-moz-appearance: textfield;
 }
 
 .numberInput:focus-within {

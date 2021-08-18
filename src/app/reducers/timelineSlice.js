@@ -1,56 +1,58 @@
 import { h } from 'preact'
+
 import { createSlice } from '@reduxjs/toolkit'
 
 import { executeColorRule as gameExecuteColorRule, executeBonusRule } from './gameSlice'
 
-const greenSlice = createSlice({
-    name: 'greenState',
+const timelineSlice = createSlice({
+    name: 'timelineState',
     initialState: {
         'step': {}
     },
     reducers: {
-        executeRule: (state, action) => {
-            const { rule, id } = action.payload
 
-            gameExecuteColorRule(state.step, id)
+        executeRule: (state, action) => {
+            const { rule, id, value } = action.payload
+
+            gameExecuteColorRule(state.step, id, value)
         },
 
         reset: (state) => {
             state.step = {}
         }
-    },
-})
 
+    }
+})
 const executeChainedRule = ({ rule, id }) => {
     return (dispatch, getState) => {
         const [color, colorI, colorJ] = id.split('-')
-        const state = getState().green
+        const state = getState().timeline
         const j = Number(colorJ)
 
         if (
-            isFirst(state,j) ||
+            isFirst(state, j) ||
             previousIsChecked(state, j) && !nextIschecked(state, j)
         ) {
             dispatch(executeRule({ rule, id }))
 
-            dispatch(executeBonusRule({ rule, id, isActive: getState().green.step[id] }))
+            dispatch(executeBonusRule({ rule, id, isActive: state.step[id] }))
         }
     }
 }
 
 function nextIschecked(state, indice) {
-    return state.step[`green-0-${indice + 1}`]
+    return state.step[`timeline-0-${indice + 1}`]
 }
 
 function previousIsChecked(state, indice) {
-    return state.step[`green-0-${indice - 1}`]
+    return state.step[`timeline-0-${indice - 1}`]
 }
 
 function isFirst(state, indice) {
 
-    return indice === 0 && !state.step[`green-0-${indice + 1}`]
+    return indice === 0 && !state.step[`timeline-0-${indice + 1}`]
 }
 
-export const { executeRule, reset } = greenSlice.actions
+export const { executeRule, reset } = timelineSlice.actions
 export { executeChainedRule }
-export default greenSlice.reducer
+export default timelineSlice.reducer

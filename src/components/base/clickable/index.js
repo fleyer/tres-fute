@@ -24,7 +24,6 @@ const Clickable = (props) => {
             <InnerElement rule={rule} color={color} border={border} displayElement={displayElement}>
                 {children}
             </InnerElement>
-
         </div>
         
     )

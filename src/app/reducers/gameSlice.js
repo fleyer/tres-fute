@@ -1,19 +1,39 @@
 import { h } from 'preact'
 import { createSlice } from '@reduxjs/toolkit'
 
+import { reset as resetGreen } from './greenSlice'
+import { reset as resetOrange } from './orangeSlice'
+import { reset as resetPurple } from './purpleSlice'
+import { reset as resetBlue } from './blueSlice'
+import { reset as resetTimeline } from './timelineSlice'
+
 const gameSclice = createSlice({
     name: 'gameState',
     initialState: {
         '+1': {},
         'replay': {},
-        'green': {}
     },
     reducers: {
+
+        resetGame: (state) => {
+            state['+1'] = {}
+            state['replay'] = {}
+        },
+
+        useBonus: (state, action) => {
+            const { id } = action.payload
+            const [color, colorId] = splitId(id)
+            const currentValue = state[color][colorId]
+            const fn = inc
+
+            state[color][colorId] = fn(currentValue)
+        },
+
         addBonus: (state, action) => {
             console.log('add bonus')
             const { rule, id } = action.payload
 
-            rule.bonus && _executeBonusRule(state, rule.bonus, id, true)
+            _executeBonusRule(state, rule.bonus, id, true)
         },
 
         removeBonus: (state, action) => {
@@ -21,31 +41,28 @@ const gameSclice = createSlice({
 
             const { rule, id } = action.payload
 
-            rule.bonus && _executeBonusRule(state, rule.bonus, id, false)
+            _executeBonusRule(state, rule.bonus, id, false)
         },
 
-        updateBonus: (state, action) => {
-            // const { rule, id } = action.payload
-            // const [color, colorId] = splitId(id)
-            // const currentValue = state[color][colorId]
-            // const fn = currentValue > 1 ? dec : inc
+        // executeColorRule: (state,action) => {
+        //     const {id,value} = action.payload
 
-            // currentValue > 0 && (state[color][colorId] = fn(currentValue))
-        },
-        executeRule: (state, action) => {
-            // let result
-
-            // console.log(action)
-
-            // action.payload && (result = _executeColorRule(state, action.payload.id))
-
-            // const { rule, id } = action.payload
-
-            // rule.bonus && excecuteBonusRule(state, rule.bonus, id, result)
-            // rule.mark && excecuteMarkRule(state, rule.mark, id, result)
-        }
-    },
+        //     executeColorRule(state.step,id,value)
+        // }
+    }
 })
+
+const reset = () => {
+    return (dispatch) => {
+        dispatch(resetGame())
+        dispatch(resetTimeline())
+        dispatch(resetBlue())
+        dispatch(resetGreen())
+        dispatch(resetOrange())
+        dispatch(resetPurple())
+    }
+}
+
 const executeBonusRule = ({ rule, id, isActive }) => {
     return (dispatch) => {
         if (!hasBonus(rule)) return
@@ -55,7 +72,16 @@ const executeBonusRule = ({ rule, id, isActive }) => {
     }
 }
 
-function hasBonus(rule){
+const executeUseBonus = ({ rule, id }) => {
+    return (dispatch, getState) => {
+        const [color, colorId] = splitId(id)
+        const isActive = getState().game[color][colorId] === 1
+
+        if (isActive) dispatch(useBonus({ rule, id }))
+    }
+}
+
+function hasBonus(rule) {
     return rule.bonus || rule.mark
 }
 
@@ -67,8 +93,8 @@ function _executeColorRule(state, id) {
     return state[color][colorId]
 }
 
-function executeColorRule(state, id) {
-    state[id] = state[id] ? !state[id] : true
+function executeColorRule(state, id, value = true) {
+    state[id] = state[id] ? !state[id] : value
 
     return state[id]
 }
@@ -79,7 +105,7 @@ function _executeBonusRule(state, bonus, id, isEnable) {
     switch (bonus) {
         case '+1':
         case 'replay':
-            const length = state[bonus].length
+            const length = Object.keys(state[bonus]).length
             const currentIndice = length - 1 > 0 ? length - 1 : 0
             const currentValue = state[bonus][currentIndice] || 0
             const value = isEnable ? 1 : 0
@@ -91,10 +117,6 @@ function _executeBonusRule(state, bonus, id, isEnable) {
         default:
             console.log('no bonus rule to execute')
     }
-}
-
-function excecuteMarkRule(state, mark) {
-
 }
 
 function splitId(id) {
@@ -109,6 +131,6 @@ function dec(value) {
     return value - 1
 }
 
-export const { addBonus, removeBonus, updateBonus, executeRule } = gameSclice.actions
-export { executeColorRule, executeBonusRule, splitId }
+export const { addBonus, useBonus, removeBonus, resetGame } = gameSclice.actions
+export { executeColorRule, executeBonusRule, executeUseBonus, reset, splitId }
 export default gameSclice.reducer

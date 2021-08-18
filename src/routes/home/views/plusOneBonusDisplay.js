@@ -8,6 +8,8 @@ import Bonus from '../../../components/base/bonus'
 import CircleClickable from '../components/circleClickable'
 import { Provider as PlusOneProvider } from '../context'
 
+import { executeUseBonus } from '../../../app/reducers/gameSlice'
+
 import { Rule as PlusOneRule, Id as PlusOneId } from '../../../game/plusone'
 
 import style from '../style.css'
@@ -15,7 +17,7 @@ import style from '../style.css'
 const PlusOneBonusDisplay = () => {
     const dispatch = useDispatch()
     const plusOneSelector = (id) => (state) => state.game['+1'][id]
-    const plusOneDispatch = useCallback((args) => {}, [])
+    const plusOneDispatch = useCallback((args) => {dispatch(executeUseBonus(args))}, [])
 
     return <div class={`mt-4 rounded border-2 border-gray-50 bg-gray-400 ${style.grid}`}>
         <PlusOneProvider value={{

@@ -1,6 +1,8 @@
 import { h } from 'preact'
 import { useCallback } from 'preact/hooks'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+
+import { executeChainedRule } from '../../../app/reducers/timelineSlice'
 
 import Grid from '../../../components/grid'
 
@@ -13,8 +15,8 @@ import style from '../style.css'
 
 const TimelineDisplay = () => {
     const dispatch = useDispatch()
-    const timelineSelector = (id) => (state) => state.green.step[id]
-    const timelineDispatch = useCallback((args) => {}, [])
+    const timelineSelector = (id) => (state) => state.timeline.step[id]
+    const timelineDispatch = useCallback((args) => dispatch(executeChainedRule(args)), [])
 
     return <div class={style.gridTimeline}>
         <TimelineProvider value={{

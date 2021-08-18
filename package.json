@@ -30,6 +30,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "dotenv-webpack": "^7.0.3",
+    "lodash": "^4.17.21",
     "preact": "^10.5.14",
     "preact-render-to-string": "^5.1.4",
     "preact-router": "^3.2.1",

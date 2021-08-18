@@ -23,4 +23,6 @@ const Input = {
     type: 'number'
 }
 
-export { Rule, Css, Input }
+const Id = 'purple'
+
+export { Rule, Css, Input, Id }
