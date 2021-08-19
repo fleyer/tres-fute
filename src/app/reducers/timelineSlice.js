@@ -34,10 +34,20 @@ const executeChainedRule = ({ rule, id }) => {
             previousIsChecked(state, j) && !nextIschecked(state, j)
         ) {
             dispatch(executeRule({ rule, id }))
-
-            dispatch(executeBonusRule({ rule, id, isActive: state.step[id] }))
+            dispatch(executeBonusRule({ 
+                rule: {id: rule.id,...getFooterBonus(rule)}, 
+                id, 
+                isActive: getState().timeline.step[id] 
+            }))
         }
     }
+}
+
+function getFooterBonus({footer}){
+    return footer.filter(elem => elem.hasOwnProperty('bonus'))
+        .reduce((acc,elem) =>{
+            return {...acc,...elem}
+        },{})
 }
 
 function nextIschecked(state, indice) {
