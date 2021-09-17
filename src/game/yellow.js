@@ -3,25 +3,25 @@ const Rule = [
         {content: '3'},
         {content: '6'},
         {content: '5'},
-        {content: 'X'},
+        {},
         {mark: 'blue', tail: true}
     ],
     [
         {content: '2'},
         {content: '1'},
-        {content: 'X'},
+        {},
         {content: '5'},
         {mark: 'yellow-4', colorVariation: '500', tail: true}
     ],
     [
         {content: '1'},
-        {content: 'X'},
+        {},
         {content: '2'},
         {content: '4'},
         {mark: 'green', tail: true}
     ],
     [
-        {content: 'X'},
+        {},
         {content: '3'},
         {content: '4'},
         {content: '6'},
@@ -41,4 +41,6 @@ const Css = {
     color: 'black-500'
 }
 
-export {Rule,Css} 
+const Id = 'yellow'
+
+export {Rule,Css,Id} 

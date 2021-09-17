@@ -1,24 +1,23 @@
 import { h } from 'preact'
-import { useCallback, useContext } from 'preact/hooks'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { executeRule } from '../../../app/reducers/gameSlice'
-
-import { Context } from '../context'
+import { useCallback } from 'preact/hooks'
 
 import Clickable from '../../../components/base/clickable'
 
 const ClickableElement = (props) => {
-    const context = useContext(Context)
-    const { id } = props
+    const { disabled, error } = props
+    const borderColor = error ? 'red-500' : 'black'
 
-    const onClick = useCallback((rule) => {
-        !rule.tail && context.dispatch({rule,id})
-    }, [])
+    return <div onClick={useCallback(_onClick.bind(null, props), [disabled])}>
+        <Clickable {...props} border={`border-2 rounded border-${borderColor}`}>
+            {props.children}
+        </Clickable>
+    </div>
+}
 
-    return <Clickable {...props} onClick={onClick} border=" border-2 rounded border-black">
-        {props.children}
-    </Clickable>
+const _onClick = ({ rule, disabled, onClick, id }) => {
+    !rule.tail &&
+    disabled != undefined && !disabled &&
+    typeof onClick === 'function' && onClick({ rule, id })
 }
 
 export default ClickableElement

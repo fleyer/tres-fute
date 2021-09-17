@@ -10,17 +10,14 @@ import Mark from "../mark"
 import style from './style.css'
 
 const Clickable = (props) => {
-    const { number, value, rule = {} , color, border,children,onClick=()=>{}} = props
+    const { number, value, rule = {} , color, border,children, disabled} = props
     const { displayElement } = props
-
-    const _onClick = useCallback(() => { 
-        onClick(rule)
-    },[])
+    const cursor = disabled !== undefined && !disabled ? 'cursor-pointer' : 'cursor-default' 
 
     const InnerElement = _getInnerElement
 
     return (
-        <div class={`flex flex-col items-center relative select-none ${style.clickable}`} onClick={_onClick}>
+        <div class={`flex flex-col items-center relative select-none ${style.clickable} ${cursor}`}>
             <InnerElement rule={rule} color={color} border={border} displayElement={displayElement}>
                 {children}
             </InnerElement>

@@ -30,10 +30,11 @@ function saveState(state) {
 
 function createStore() {
     const store = configureStore({
-        reducer: rootReducer, preloadedState: loadState()
+        reducer: rootReducer,
+        preloadedState: loadState()
     })
 
-    store.subscribe(debounce(() => {
+    store.subscribe(debounce((v) => {
         saveState(store.getState());
     }, 1000));
 

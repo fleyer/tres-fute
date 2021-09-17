@@ -7,48 +7,38 @@ const orangeSlice = createSlice({
     name: 'orangeState',
     initialState: {
         'step': {
-            'orange-0-0-isDisabled': false
+            'orange-0-0-disabled': false
         }
     },
     reducers: {
         executeRule: (state, action) => {
             const { rule, id, value } = action.payload
+            const [, , colorJ] = id.split('-')
+
 
             gameExecuteColorRule(state.step, id, value)
+            gameExecuteColorRule(state.step,getDisabledId(Number(colorJ) +1),false)
+
+            if(colorJ > 0)
+                gameExecuteColorRule(state.step,getDisabledId(Number(colorJ) - 1),true)
+
         },
 
         reset: (state) => {
-            state.step = { 'orange-0-0-isDisabled': false }
+            state.step = { 'orange-0-0-disabled': false }
         }
     },
 })
 
+const getId = (index) => `orange-0-${index}`
+const getDisabledId = (id) => `${getId(id)}-disabled`
+
 const executeChainedRule = ({ rule, id, value }) => {
     return (dispatch, getState) => {
-        const [color, colorI, colorJ] = id.split('-')
 
         dispatch(executeRule({ rule, id, value }))
-        dispatch(executeRule({ rule: {}, id: `orange-0-${Number(colorJ) + 1}-isDisabled`, value: false }))
-        dispatch(executeBonusRule({ rule, id, isActive: getState().orange.step[id] }))
-
-        if (colorJ > 0 && value) {
-            dispatch(executeRule({ rule: {}, id: `orange-0-${Number(colorJ) - 1}-isDisabled`, value: true }))
-        }
-
+        dispatch(executeBonusRule({ rule, id, isActive: getState().gameState.present.orange.step[id] }))
     }
-}
-
-function nextIschecked(state, indice) {
-    return state.step[`orange-0-${indice + 1}`]
-}
-
-function previousIsChecked(state, indice) {
-    return state.step[`orange-0-${indice - 1}`]
-}
-
-function isFirst(state, indice) {
-
-    return indice === 0 && !state.step[`orange-0-${indice + 1}`]
 }
 
 export const { executeRule, reset } = orangeSlice.actions

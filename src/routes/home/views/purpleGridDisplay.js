@@ -9,25 +9,21 @@ import { executeChainedRule } from '../../../app/reducers/purpleSlice'
 import Grid from '../../../components/grid'
 import Clickable from '../components/clickable'
 
-import { Provider as PurpleProvider } from '../context'
+// import { Provider as PurpleProvider } from '../context'
 
 import { Rule as PurpleRule, Id as PurpleId, Css as PurpleCss } from '../../../game/purple'
 
 import style from '../style.css'
 
 const PurpleGridDisplay = () => {
-    const purpleSelector = (id) => (state) => state.purple.step[id]
-    const purpleDispatch = useCallback(() => { }, [])
 
     return <div class={`mt-4 pt-2 pb-1 rounded ${PurpleCss.bg} ${style.grid}`}>
-        <PurpleProvider value={{ dispatch: purpleDispatch, selector: purpleSelector }}>
-            <Grid
-                item={getPurpleClickable}
-                gridInfo={{ line: 1, column: 10, itemId: PurpleId }}
-                rule={PurpleRule}
-                css={PurpleCss}
-            />
-        </PurpleProvider>
+        <Grid
+            item={getPurpleClickable}
+            gridInfo={{ line: 1, column: 10, itemId: PurpleId }}
+            rule={PurpleRule}
+            css={PurpleCss}
+        />
     </div>
 }
 
@@ -36,27 +32,35 @@ const PurpleDividerCmp = () => <div class={style.purpleDivider}>
 </div>
 
 const getPurpleClickable = (props) => {
-    const PurpleClickable = Clickable
     const dispatch = useDispatch()
-    const [, colorI, colorJ] = props.id.split('-')
-    const isDisabled = useSelector((state) => state.purple.step[`purple-0-${colorJ}-isDisabled`])
-    const value = useSelector((state)=> state.purple.step[`purple-0-${colorJ}`])
+    const purpleSelector = (state) => state.gameState.present.purple.step[props.id]
+    const purpleDispatch = (rule, id, value) => { dispatch(executeChainedRule({ rule, id, value })) }
+    const isDisabled = useSelector((state) => state.gameState.present.purple.step[`${props.id}-disabled`])
+    const error = useSelector((state) => state.gameState.present.purple.step[`${props.id}-error`])
 
-    const onChange = (e) => {
-        const value = Number(e.data)
-        dispatch(executeChainedRule({rule: props.rule,id: props.id,value}))
-    }
+    const value = useSelector(purpleSelector) || ""
 
-    return <PurpleClickable {...props}>
-        <input 
-            class={style.numberInput} 
-            disabled={isDisabled === undefined ? true : isDisabled}
-            onChange={onChange}
-            value={value}
-            type="number">
-        </input>
+    return <div class="flex">
+        <Clickable {...props} error={error}>
+            <input
+                class={style.numberInput}
+                disabled={isDisabled === undefined ? true : isDisabled}
+                onChange={onChange(props, purpleDispatch)}
+                value={value}
+                type="number">
+            </input>
+            <PurpleDividerCmp />
+            
+        </Clickable>
         {/* {props.number < PurpleRule[0].length - 1 && <PurpleDividerCmp />} */}
-    </PurpleClickable>
+    </div>
+
+}
+
+const onChange = ({ rule, id }, dispatch) => {
+    return (e) => {
+        dispatch(rule, id, Number(e.data))
+    }
 }
 
 export default PurpleGridDisplay

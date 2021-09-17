@@ -1,6 +1,5 @@
 import { h } from 'preact'
-import { useCallback } from 'preact/hooks'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { executeChainedRule } from '../../../app/reducers/timelineSlice'
 
@@ -9,30 +8,26 @@ import Grid from '../../../components/grid'
 import { Rule as TimelineRule, Css as TimelineCss, Id as TimelineId } from '../../../game/timeline'
 
 import TimelineElement from '../components/timelineElement'
-import { Provider as TimelineProvider } from '../context'
 
 import style from '../style.css'
 
-const TimelineDisplay = () => {
-    const dispatch = useDispatch()
-    const timelineSelector = (id) => (state) => state.timeline.step[id]
-    const timelineDispatch = useCallback((args) => dispatch(executeChainedRule(args)), [])
-
-    return <div class={style.gridTimeline}>
-        <TimelineProvider value={{
-            selector: timelineSelector,
-            dispatch: timelineDispatch
-        }}>
-            <Grid
-                item={TimelineElement}
-                gridInfo={{ line: 1, column: 6, itemId: TimelineId }}
-                rule={TimelineRule}
-                css={TimelineCss}
-            />
-        </TimelineProvider>
-
+const TimelineDisplay = () => 
+    <div class={style.gridTimeline}>
+        <Grid
+            item={getTimelineElement}
+            gridInfo={{ line: 1, column: 6, itemId: TimelineId }}
+            rule={TimelineRule}
+            css={TimelineCss}
+        />
     </div>
 
+const getTimelineElement = (props) => {
+    const dispatch = useDispatch()
+    const onClick = (args) => dispatch(executeChainedRule(args))
+    const disabled = useSelector((state) => state.gameState.present.timeline.step[`${props.id}-disabled`])
+    const checked = useSelector((state) => state.gameState.present.timeline.step[props.id])
+
+    return <TimelineElement {...props} checked={checked} onClick={onClick} disabled={disabled}></TimelineElement>
 }
 
 export default TimelineDisplay

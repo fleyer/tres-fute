@@ -7,47 +7,47 @@ import { executeColorRule as gameExecuteColorRule, executeBonusRule } from './ga
 const timelineSlice = createSlice({
     name: 'timelineState',
     initialState: {
-        'step': {}
+        'step': {
+            'timeline-0-0-disabled': false
+        }
     },
     reducers: {
 
         executeRule: (state, action) => {
             const { rule, id, value } = action.payload
+            const [name, colorJ, colorI] = id.split('-')
 
             gameExecuteColorRule(state.step, id, value)
+            gameExecuteColorRule(state.step, `${id}-disabled`, true)
+            gameExecuteColorRule(state.step, `${name}-${colorJ}-${Number(colorI)+1}-disabled`, false)
         },
 
         reset: (state) => {
-            state.step = {}
+            state.step = {
+                'timeline-0-0-disabled': false
+            }
         }
 
     }
 })
 const executeChainedRule = ({ rule, id }) => {
     return (dispatch, getState) => {
-        const [color, colorI, colorJ] = id.split('-')
-        const state = getState().timeline
-        const j = Number(colorJ)
 
-        if (
-            isFirst(state, j) ||
-            previousIsChecked(state, j) && !nextIschecked(state, j)
-        ) {
-            dispatch(executeRule({ rule, id }))
-            dispatch(executeBonusRule({ 
-                rule: {id: rule.id,...getFooterBonus(rule)}, 
-                id, 
-                isActive: getState().timeline.step[id] 
-            }))
-        }
+        dispatch(executeRule({ rule, id }))
+        dispatch(executeBonusRule({
+            rule: { id: rule.id, ...getFooterBonus(rule) },
+            id,
+            isActive: getState().gameState.present.timeline.step[id]
+        }))
+
     }
 }
 
-function getFooterBonus({footer}){
+function getFooterBonus({ footer }) {
     return footer.filter(elem => elem.hasOwnProperty('bonus'))
-        .reduce((acc,elem) =>{
-            return {...acc,...elem}
-        },{})
+        .reduce((acc, elem) => {
+            return { ...acc, ...elem }
+        }, {})
 }
 
 function nextIschecked(state, indice) {

@@ -7,19 +7,18 @@
     max-width: 35px;
 }
 
+/* .clickable > * {
+    cursor: pointer;
+}
+
+.clickable.disabled > * {
+    cursor: initial !important;
+} */
+
 .boxContainer {
     height: 30px;
     width: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.clickableContainer {
-
-}
-
-.checkContainer {
-    
-    
 }

@@ -1,9 +1,11 @@
 import { h } from 'preact'
 import { createSlice } from '@reduxjs/toolkit'
+import { ActionCreators } from 'redux-undo'
 
 import { reset as resetGreen } from './greenSlice'
 import { reset as resetOrange } from './orangeSlice'
 import { reset as resetPurple } from './purpleSlice'
+import { reset as resetYellow } from './yellowSlice'
 import { reset as resetBlue } from './blueSlice'
 import { reset as resetTimeline } from './timelineSlice'
 
@@ -12,6 +14,7 @@ const gameSclice = createSlice({
     initialState: {
         '+1': {},
         'replay': {},
+        'timeline': {}
     },
     reducers: {
 
@@ -21,12 +24,11 @@ const gameSclice = createSlice({
         },
 
         useBonus: (state, action) => {
-            const { id } = action.payload
-            const [color, colorId] = splitId(id)
-            const currentValue = state[color][colorId]
-            const fn = inc
+            const { id, rule} = action.payload
+            const [bonusType,,colorId] = id.split('-') 
+            const currentValue = state[bonusType][id]
 
-            state[color][colorId] = fn(currentValue)
+            state[bonusType][id] = inc(currentValue)
         },
 
         addBonus: (state, action) => {
@@ -42,24 +44,21 @@ const gameSclice = createSlice({
             const { rule, id } = action.payload
 
             _executeBonusRule(state, rule.bonus, id, false)
-        },
-
-        // executeColorRule: (state,action) => {
-        //     const {id,value} = action.payload
-
-        //     executeColorRule(state.step,id,value)
-        // }
+        }
     }
 })
 
 const reset = () => {
     return (dispatch) => {
+        // dispatch(reset())
         dispatch(resetGame())
         dispatch(resetTimeline())
-        dispatch(resetBlue())
+        // dispatch(resetBlue())
+        dispatch(resetYellow())
         dispatch(resetGreen())
         dispatch(resetOrange())
         dispatch(resetPurple())
+        dispatch(ActionCreators.clearHistory())
     }
 }
 
@@ -68,16 +67,13 @@ const executeBonusRule = ({ rule, id, isActive }) => {
         if (!hasBonus(rule)) return
 
         else if (isActive) dispatch(addBonus({ rule, id }))
-        else dispatch(removeBonus({ rule, id }))
     }
 }
 
 const executeUseBonus = ({ rule, id }) => {
     return (dispatch, getState) => {
-        const [color, colorId] = splitId(id)
-        const isActive = getState().game[color][colorId] === 1
 
-        if (isActive) dispatch(useBonus({ rule, id }))
+        dispatch(useBonus({ rule, id }))
     }
 }
 
@@ -93,25 +89,25 @@ function _executeColorRule(state, id) {
     return state[color][colorId]
 }
 
-function executeColorRule(state, id, value = true) {
-    state[id] = state[id] ? !state[id] : value
+function executeColorRule(state, id, value) {
+    state[id] =  value !== undefined ? value : !state[id]
 
     return state[id]
 }
 
-function _executeBonusRule(state, bonus, id, isEnable) {
+function _executeBonusRule(state, bonusType, id, isEnable) {
     const [color, colorId] = splitId(id)
 
-    switch (bonus) {
+    switch (bonusType) {
         case '+1':
         case 'replay':
-            const length = Object.keys(state[bonus]).length
-            const currentIndice = length - 1 > 0 ? length - 1 : 0
-            const currentValue = state[bonus][currentIndice] || 0
-            const value = isEnable ? 1 : 0
-            const indice = isEnable && currentValue > 0 ? length : currentIndice
+            const length = Object.keys(state[bonusType]).length
+        
+            const value = 1
+            const indice = length
+            const bonusKey = `${bonusType}-0-${indice}`
 
-            state[bonus][indice] = value
+            state[bonusType][bonusKey] = value
             break
 
         default:

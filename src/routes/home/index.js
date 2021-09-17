@@ -1,17 +1,12 @@
 import { h } from 'preact';
 import { useCallback, useState } from 'preact/hooks';
 import { useDispatch } from 'react-redux';
+import { FaUndo } from "react-icons/fa";
+import { FaRedo } from "react-icons/fa";
+import { ActionCreators } from 'redux-undo';
 
 import { reset } from '../../app/reducers/gameSlice'
-
-import Grid from '../../components/grid';
-import Clickable from '../../components/base/clickable'
-import SquareElement from '../../components/base/clickable/square'
-import CircleElement from '../../components/base/clickable/circle'
-import Divider from '../../components/base/divider';
-import CheckDisplay from '../../components/base/clickable/checkedDisplay';
-import CircleCheckedDisplay from '../../components/base/clickable/circleCheckedDisplay';
-
+import store from '../../app/store'
 import style from './style.css';
 
 import ReplayBonusDisplay from './views/replayBonusDisplay';
@@ -21,11 +16,16 @@ import GreenGridDisplay from './views/greenGridDisplay';
 import BlueGridDisplay from './views/blueGridDisplay';
 import OrangeGridDisplay from './views/orangeGridDisplay';
 import PurpleGridDisplay from './views/purpleGridDisplay';
+import YellowGridDisplay from './views/yellowGridDisplay';
 
 const Home = () => (
 	<div class={`w-full flex justify-center ${style.home}`}>
 		<div class="w-full mt-4 flex flex-col lg:items-center lg:max-w-3xl">
-			<button class="btn btn-blue" onClick={useCallback(onReset(useDispatch()),[])}>reset</button>
+			<div class="flex space-x-4 mb-2">
+				<button class="btn btn-blue" onClick={()=>{store.dispatch(ActionCreators.undo())}}><FaUndo></FaUndo></button>
+				<button class="btn btn-blue" onClick={()=>{store.dispatch(ActionCreators.redo())}}><FaRedo></FaRedo></button>
+				<button class="btn btn-blue" onClick={useCallback(onReset(useDispatch()),[])}>reset</button>
+			</div>
 			{/* timeline */}
 			<TimelineDisplay></TimelineDisplay>
 
@@ -36,17 +36,10 @@ const Home = () => (
 			<PlusOneBonusDisplay></PlusOneBonusDisplay>
 
 			{/* yellow box */}
-			{/* <div class={`mt-4 pt-2 pb-1 rounded ${YellowCss.bg} ${style.grid}`}>
-				<Grid
-					item={getCheckClickable}
-					gridInfo={{ line: 4, column: 4 }}
-					rule={YellowRule}
-					css={YellowCss}
-				/>
-			</div> */}
+			<YellowGridDisplay></YellowGridDisplay>
 
 			{/* blue box */}
-			<BlueGridDisplay></BlueGridDisplay>
+			{/* <BlueGridDisplay></BlueGridDisplay> */}
 
 			{/* green box */}
 			<GreenGridDisplay></GreenGridDisplay>
