@@ -26,10 +26,15 @@
 .numberInput {
 	width: 100%;
 	text-align: center;
+
+	-moz-appearance: textfield;
+
+	border: 0;
 }
 
 .numberInput:focus-within {
 	z-index: 100;
+	outline: none;
 }
 
 .bonusHeader {
@@ -44,13 +49,12 @@
 .purpleDivider {
 	position: absolute;
     height: 100%;
-	width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
 	top: 0;
-	left: 70%;
+	left: 98%;
 
 	z-index: 20;
 

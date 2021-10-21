@@ -30,3 +30,11 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
+
+.btn {
+	@apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+	@apply bg-blue-500 text-white;
+}

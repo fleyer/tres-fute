@@ -8,26 +8,35 @@ import Grid from '../../../components/grid'
 
 import { Css as GreenCss, Rule as GreenRule, Id as GreenId } from '../../../game/green'
 import CheckClickable from '../components/checkClickable'
-import { Provider as GreenProvider } from '../context'
 
 import style from '../style.css'
 
 const GreenGridDisplay = () => {
-    const dispatch = useDispatch()
-    const greenSelector = (id) => (state) => state.green.step[id]
-    const greenDispatch = useCallback((args) => dispatch(executeChainedRule(args)), [])
 
     return <div class={`mt-4 pt-2 pb-1 rounded ${GreenCss.bg} ${style.grid}`}>
-        <GreenProvider value={{ dispatch: greenDispatch , selector: greenSelector }}>
-            <Grid
-                item={CheckClickable}
-                gridInfo={{ line: 1, column: 10, itemId: GreenId }}
-                rule={GreenRule}
-                css={GreenCss}
-            />
-        </GreenProvider>
+        <Grid
+            item={getGreenCheckClicable}
+            gridInfo={{ line: 1, column: 10, itemId: GreenId }}
+            rule={GreenRule}
+            css={GreenCss}
+        />
     </div>
 }
+
+const getGreenCheckClicable = (props) => {
+    const dispatch = useDispatch()
+    const { id } = props
+    const checked = useSelector((state) => state.gameState.present.green.step[id])
+    const disabled = useSelector((state) => state.gameState.present.green.step[`${id}-disabled`])
+    const onClick = useCallback((args) => dispatch(executeChainedRule(args)), [])
+
+    return <CheckClickable 
+        {...props}
+        checked={checked}
+        disabled={disabled} 
+        onClick={onClick}/>
+}
+
 
 
 export default GreenGridDisplay

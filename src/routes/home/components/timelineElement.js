@@ -8,7 +8,7 @@ import style from '../style.css'
 
 const TimelineElement = (props) => {
 	const { rule } = props
-	const { footer, cmps } = rule
+	const { footer } = rule
 
 	return <Box css="relative flex flex-col bg-gray-500 items-center">
 		<CheckClickable {...props} 
