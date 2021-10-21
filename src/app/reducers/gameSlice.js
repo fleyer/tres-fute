@@ -53,7 +53,7 @@ const reset = () => {
         // dispatch(reset())
         dispatch(resetGame())
         dispatch(resetTimeline())
-        // dispatch(resetBlue())
+        dispatch(resetBlue())
         dispatch(resetYellow())
         dispatch(resetGreen())
         dispatch(resetOrange())

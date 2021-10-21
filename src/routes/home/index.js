@@ -39,7 +39,7 @@ const Home = () => (
 			<YellowGridDisplay></YellowGridDisplay>
 
 			{/* blue box */}
-			{/* <BlueGridDisplay></BlueGridDisplay> */}
+			<BlueGridDisplay></BlueGridDisplay>
 
 			{/* green box */}
 			<GreenGridDisplay></GreenGridDisplay>

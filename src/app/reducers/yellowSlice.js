@@ -7,7 +7,12 @@ import { Rule as YellowRule } from '../../game/yellow'
 const yellowSlice = createSlice({
     name: 'yellowState',
     initialState: {
-        'step': {}
+        'step': {
+            'yellow-0-3': true,
+            'yellow-1-2': true,
+            'yellow-2-1': true,
+            'yellow-3-0': true,
+        }
     },
     reducers: {
         executeRule: (state, action) => {

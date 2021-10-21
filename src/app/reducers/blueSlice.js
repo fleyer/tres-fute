@@ -14,7 +14,7 @@ const blueSlice = createSlice({
     },
     reducers: {
         executeRule: (state, action) => {
-            const { rule, id } = action.payload
+            const { id } = action.payload
 
             gameExecuteColorRule(state.step, id)
         },
@@ -31,7 +31,7 @@ const executeChainedRule = ({ rule, id }) => {
 
         dispatch(executeRule({ rule, id }))
 
-        const newState = getState().blue
+        const newState = getState().gameState.present.blue
         const isActive = newState.step[id]
 
         //vertical check
