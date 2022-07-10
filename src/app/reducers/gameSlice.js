@@ -50,7 +50,6 @@ const gameSclice = createSlice({
 
 const reset = () => {
     return (dispatch) => {
-        // dispatch(reset())
         dispatch(resetGame())
         dispatch(resetTimeline())
         dispatch(resetBlue())

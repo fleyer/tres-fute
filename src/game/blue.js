@@ -50,4 +50,22 @@ const Header = [
     ]
 ]
 
-export { Rule, Css, Header, Id }
+const calculateScore = (step) => {
+    const keys = Object.keys(step)
+
+    const result = keys.filter((key) => { 
+        const split = key.split('-')
+        const lastIndex = split.length - 1
+
+        return step[key] && Number(split[lastIndex]) >= 0
+    }).length
+
+    console.log(keys)
+    console.log(result-1)
+    console.log(Header[0])
+    console.log(Header[0][result-1])
+
+    return result > 1 ? Header[0][result-2].indicator : 0
+}
+
+export { Rule, Css, Header, Id, calculateScore }

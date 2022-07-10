@@ -1,0 +1,16 @@
+.score {
+	padding: 56px 20px;
+	min-height: 100%;
+}
+
+.score tbody tr:last-child {
+	font-weight: 500;
+} 
+
+.score tbody tr:last-child td {
+	padding: 20px inherit;
+}
+
+.scoreContainer {
+	text-align: center;
+}

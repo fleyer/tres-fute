@@ -43,4 +43,24 @@ const Css = {
 
 const Id = 'yellow'
 
-export {Rule,Css,Id} 
+const calculateScore = (step) => {
+    let result = 0
+
+    for(let i = 0; i < 4; i++){
+        if(isColumnCompleted(step,i)) result += getColumnScore(i)
+    }
+
+    return result;
+}
+
+const getColumnScore = (column) => Rule[4][column].indicator
+
+const isColumnCompleted = (step,column) => {
+    let row = 0
+
+    while(row < 4 && step[`${Id}-${row}-${column}`]) row++;
+
+    return row == 4;
+}
+
+export {Rule,Css,Id,calculateScore} 

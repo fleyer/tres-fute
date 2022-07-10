@@ -17,6 +17,7 @@ import BlueGridDisplay from './views/blueGridDisplay';
 import OrangeGridDisplay from './views/orangeGridDisplay';
 import PurpleGridDisplay from './views/purpleGridDisplay';
 import YellowGridDisplay from './views/yellowGridDisplay';
+import { Link } from 'preact-router';
 
 const Home = () => (
 	<div class={`w-full flex justify-center ${style.home}`}>
@@ -25,6 +26,7 @@ const Home = () => (
 				<button class="btn btn-blue" onClick={()=>{store.dispatch(ActionCreators.undo())}}><FaUndo></FaUndo></button>
 				<button class="btn btn-blue" onClick={()=>{store.dispatch(ActionCreators.redo())}}><FaRedo></FaRedo></button>
 				<button class="btn btn-blue" onClick={useCallback(onReset(useDispatch()),[])}>reset</button>
+				<Link class="btn btn-blue" href="/score">Finish</Link>
 			</div>
 			{/* timeline */}
 			<TimelineDisplay></TimelineDisplay>
