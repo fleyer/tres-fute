@@ -25,4 +25,10 @@ const Input = {
 
 const Id = 'purple'
 
-export { Rule, Css, Input, Id }
+const calculateScore = (step) => {
+    return Object.values(step)
+    .filter(value => typeof value === 'number')
+    .reduce((acc,current) => acc + current,0)
+}
+
+export { Rule, Css, Input, Id , calculateScore }

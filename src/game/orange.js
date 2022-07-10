@@ -21,4 +21,10 @@ const Css = {
 
 const Id = 'orange'
 
-export { Rule, Css, Id }
+const calculateScore = (step) => {
+    return Object.values(step)
+    .filter(value => typeof value === 'number')
+    .reduce((acc,current) => acc + current,0)
+}
+
+export { Rule, Css, Id, calculateScore }
