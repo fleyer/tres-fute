@@ -1,6 +1,6 @@
 const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
-const tailwindcss = require('tailwindcss')
+const tailwindcss = require('@tailwindcss/postcss')
 
 module.exports = (config, env, helpers, params = defaultParams) => {
     const postCssLoaders = helpers.getLoadersByName(config, 'postcss-loader');
@@ -12,10 +12,15 @@ module.exports = (config, env, helpers, params = defaultParams) => {
 
     postCssLoaders.forEach(({ loader }) => {
         loader.options.postcssOptions.plugins = [
-            tailwindcss('./tailwind.config.js'),
+            tailwindcss(),
             ...loader.options.postcssOptions.plugins
         ]
     });
+
+    // critters' CSS parser can't handle tailwind v4 output (cascade layers, nesting)
+    config.plugins = config.plugins.filter(
+        plugin => plugin.constructor.name !== 'Critters'
+    )
 
     //add dot env plugins
     config.plugins.push(
