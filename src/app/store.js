@@ -38,13 +38,6 @@ function createStore() {
         saveState(store.getState());
     }, 1000));
 
-    if (module.hot) {
-        module.hot.accept('./reducers', () => {
-            const nextReducer = require('./reducers/index').default;
-            store.replaceReducer(nextReducer);
-        });
-    }
-
     return store
 }
 

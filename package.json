@@ -4,35 +4,21 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "export NODE_ENV=production NODE_OPTIONS=\"--openssl-legacy-provider --require ./scripts/esm-shim.js\" && preact build",
-    "serve": "sirv build --port 8080 --cors --single",
-    "dev": "NODE_OPTIONS=\"--openssl-legacy-provider --require ./scripts/esm-shim.js\" preact watch",
     "lint": "eslint src",
-    "test": "jest"
-  },
-  "eslintConfig": {
-    "extends": "preact",
-    "ignorePatterns": [
-      "build/"
-    ]
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --port 8080"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^8.0.0",
-    "@tailwindcss/postcss": "^4.3.3",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-preact-pure": "^4.1.0",
+    "@preact/preset-vite": "^2.10.6",
+    "@tailwindcss/vite": "^4.3.3",
     "eslint": "^9.39.0",
-    "eslint-config-preact": "^2.0.0",
-    "jest": "^29.7.0",
-    "jest-preset-preact": "^4.1.1",
-    "preact-cli": "^3.5.1",
-    "sirv-cli": "3.0.1"
+    "vite": "^8.3.5"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
-    "dotenv-webpack": "^9.0.0",
     "lodash": "^4.18.1",
-    "preact": "^10.29.8",
+    "preact": "^11.1.1",
     "preact-render-to-string": "^6.8.2",
     "preact-router": "^4.1.2",
     "react-icons": "^5.7.0",
@@ -40,11 +26,5 @@
     "redux-undo": "^1.1.0",
     "tailwindcss": "^4.3.3"
   },
-  "jest": {
-    "preset": "jest-preset-preact",
-    "setupFiles": [
-      "<rootDir>/tests/__mocks__/browserMocks.js",
-      "<rootDir>/tests/__mocks__/setupTests.js"
-    ]
-  }
+  "type": "module"
 }
