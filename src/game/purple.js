@@ -31,4 +31,12 @@ const calculateScore = (step) => {
     .reduce((acc,current) => acc + current,0)
 }
 
-export { Rule, Css, Input, Id , calculateScore }
+const isWolfChecked = (steps) => {
+    return Object.keys(steps).some(step => {
+        const index = step.split('-').reverse()[0]
+
+        return steps[step] && Number(index) >= 0 && Rule[0][index].bonus === 'wolf'
+    })
+}
+
+export { Rule, Css, Input, Id , calculateScore, isWolfChecked}

@@ -22,18 +22,26 @@ const Css = {
 
 const Id = 'green'
 
-const calculateScore = (step) => {
-    const keys = Object.keys(step)
+const calculateScore = (steps) => {
+    const keys = Object.keys(steps)
 
     const result = keys.filter((key) => { 
         const split = key.split('-')
         const lastIndex = split.length - 1
 
-        return step[key] && Number(split[lastIndex]) >= 0
+        return steps[key] && Number(split[lastIndex]) >= 0
     }).length
 
-
-    return result > 1 ? Rule[0][result-1].indicator : 0
+    return result >= 1 ? Rule[0][result-1].indicator : 0
 }
 
-export { Rule, Css, Id, calculateScore }
+const isWoldChecked = (steps) => {
+
+    return Object.keys(steps).some( step => {
+        const index = step.split('-').reverse()[0]
+
+        return steps[step] && Number(index) >= 0 && Rule[0][index].bonus === 'wolf'
+    })
+}
+
+export { Rule, Css, Id, calculateScore, isWoldChecked }

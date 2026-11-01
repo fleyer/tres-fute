@@ -60,12 +60,16 @@ const calculateScore = (step) => {
         return step[key] && Number(split[lastIndex]) >= 0
     }).length
 
-    console.log(keys)
-    console.log(result-1)
-    console.log(Header[0])
-    console.log(Header[0][result-1])
-
     return result > 1 ? Header[0][result-2].indicator : 0
 }
 
-export { Rule, Css, Header, Id, calculateScore }
+const isWolfChecked = (steps) => {
+
+    const lastRow = Object.keys(steps)
+        .map(step => ({ row: Number(step.split('-')[1]), value: steps[step] }))
+        .filter(elem => elem.row === 2)
+        
+    return lastRow.length > 0 && lastRow.every(elem => elem.value)
+}
+
+export { Rule, Css, Header, Id, calculateScore, isWolfChecked }

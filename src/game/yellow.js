@@ -63,4 +63,10 @@ const isColumnCompleted = (step,column) => {
     return row == 4;
 }
 
-export {Rule,Css,Id,calculateScore} 
+const isWolfChecked = (steps) => {
+
+    return [1,2,3].map(index => steps[`yellow-3-${index}`])
+        .every( value => value )
+}
+
+export {Rule,Css,Id,calculateScore, isWolfChecked} 
