@@ -3,6 +3,16 @@
 /* classes built dynamically (mark/image components) cannot be detected by the scanner */
 @source inline("{bg,text}-{black,white,blue,green,orange,purple,yellow,red}{,-{400,500,600}}");
 
+
+@layer base {
+  button, 
+  [type='button'], 
+  [type='reset'], 
+  [type='submit'] {
+    cursor: pointer;
+  }
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
